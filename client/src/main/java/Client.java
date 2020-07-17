@@ -4,7 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Client extends Application {
 
     final private int WIDTH = 1000;
     final private int HEIGHT = 600;
