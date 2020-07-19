@@ -1,67 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
-   <children>
-      <SplitPane dividerPositions="0.5" prefHeight="600.0" prefWidth="1000.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="500.0">
-               <children>
-                  <Text layoutX="154.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Local Storage" textAlignment="CENTER" wrappingWidth="148.13671875">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <ListView id="lclList" fixedCellSize="20.0" layoutY="74.0" prefHeight="526.0" prefWidth="496.0" />
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="500.0">
-               <children>
-                  <Text layoutX="174.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cloud Storage" textAlignment="CENTER" wrappingWidth="148.13671875">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <ListView id="cldList" fixedCellSize="20.0" layoutY="73.0" prefHeight="526.0" prefWidth="496.0" />
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-      <GridPane layoutY="30.0" prefHeight="45.0" prefWidth="1000.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" text="Send file">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="252.0" text="Delete" GridPane.columnIndex="1">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="251.0" text="Download" GridPane.columnIndex="2">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="88.0" prefWidth="254.0" text="Erase" GridPane.columnIndex="3">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-         </children>
-      </GridPane>
-   </children>
-</AnchorPane>
+<VBox fx:id="rootNode" style="-fx-background-color: linear-gradient(#aaa 0%, #eee 10%, #ddd 90%, #ccc 100%);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+    <HBox VBox.vgrow="ALWAYS">
+        <VBox alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
+            <Label text="Локальный компьютер" textAlignment="CENTER"><font>
+                <Font name="Verdana Bold" size="16.0" />
+            </font></Label>
+            <VBox>
+                <TextField fx:id="tfFileName" focusTraversable="false" promptText="Укажите имя файла на сервере" HBox.hgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="2.0" right="1.0" />
+                    </VBox.margin></TextField>
+                <Button onAction="#pressOnDownloadBtn" text="Скачать">
+                    <VBox.margin>
+                        <Insets left="1.0" />
+                    </VBox.margin></Button>
+            </VBox>
+            <ListView fx:id="filesList" onMousePressed="#pressedClientFileList" prefHeight="371.0" prefWidth="248.0" VBox.vgrow="ALWAYS">
+                <VBox.margin>
+                    <Insets left="2.0" top="6.0" />
+                </VBox.margin>
+            <opaqueInsets>
+               <Insets bottom="10.0" />
+            </opaqueInsets></ListView>
+        </VBox>
+
+        <VBox alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
+            <Label text="Сервер" textAlignment="CENTER">
+                <font>
+                    <Font name="Verdana Bold" size="16.0" />
+                </font></Label>
+            <VBox>
+                <TextField fx:id="tfFileNameServer" promptText="Укажите файлы для передачи" HBox.hgrow="ALWAYS">
+                    <VBox.margin>
+                    <Insets left="5.0" right="1.0" />
+                    </VBox.margin>
+                </TextField>
+                <HBox>
+                    <Button onAction="#sendFile" text="В сервер">
+                        <HBox.margin>
+                        <Insets left="5.0" />
+                        </HBox.margin>
+                    </Button>
+                    <Button onAction="#getServerFilesList" text="Обновить" />
+                </HBox>
+            </VBox>
+            <ListView fx:id="filesServerList" onMousePressed="#pressedServerFileList" VBox.vgrow="ALWAYS">
+                <VBox.margin><Insets left="4.0" right="2.0" top="6.0" /></VBox.margin>
+            </ListView>
+
+        </VBox>
+
+    </HBox>
+</VBox>

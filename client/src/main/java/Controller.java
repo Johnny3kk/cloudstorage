@@ -1,6 +1,9 @@
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
@@ -25,6 +28,18 @@ public class Controller implements Initializable, EventHandler<WindowEvent> {
         new Thread(() -> NettyNetwork.getInstance().start(this)).start();
         refreshLocalFilesList();
     }
+
+    @FXML
+    TextField tfFileName;
+
+    @FXML
+    TextField tfFileNameServer;
+
+    @FXML
+    ListView<String> filesList;
+
+    @FXML
+    ListView<String> filesServerList;
 
     public void refreshLocalFilesList() {
         if (Platform.isFxApplicationThread()) {
@@ -58,7 +73,7 @@ public class Controller implements Initializable, EventHandler<WindowEvent> {
 
     public void refresh() {
         if (serverFilelist != null) {
-            serverFilelist.getItems().clear();
+            filesServerList.getItems().clear();
             for (String o: serverFilelist) {
                 filesServerList.getItems().add(o);
             }
@@ -83,11 +98,11 @@ public class Controller implements Initializable, EventHandler<WindowEvent> {
     }
 
     public void pressedServerFileList() {
-        tfFileName.setText(filesServerList.getSelectionModel().selectedItemProperly().getValue());
+        tfFileName.setText(filesServerList.getSelectionModel().selectedItemProperty().getValue());
     }
 
     public void pressedClientFileList() {
-        tfFileNameServer.setText(filesList.getSelectionModel().selectedItemProperly().getValue());
+        tfFileNameServer.setText(filesList.getSelectionModel().selectedItemProperty().getValue());
     }
 
     public void sendFile() throws IOException {
