@@ -18,13 +18,12 @@ public class Controller implements Initializable, EventHandler<WindowEvent> {
     private static final Logger log = Logger.getLogger(String.valueOf(Controller.class));
 
     @Override
-    public void handle(WindowEvent event) {
-
-    }
+    public void handle(WindowEvent event) {}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        new Thread(() -> NettyNetwork.getInstance().start(this)).start();
+        refreshLocalFilesList();
     }
 
     public void refreshLocalFilesList() {
@@ -64,5 +63,41 @@ public class Controller implements Initializable, EventHandler<WindowEvent> {
                 filesServerList.getItems().add(o);
             }
         }
+    }
+
+    public void pressOnDownloadBtn() throws IOException {
+        if (tfFileName.getLength() > 0) {
+            send(tfFileName.getText());
+            tfFileName.clear();
+        }
+    }
+
+    public void send(String fileName) {
+        NettyNetwork.getInstance().getFile(fileName);
+    }
+
+    public void getServerFilesList() {
+        filesServerList.getItems().clear();
+        NettyNetwork.getInstance().getServerFilesList();
+        refresh();
+    }
+
+    public void pressedServerFileList() {
+        tfFileName.setText(filesServerList.getSelectionModel().selectedItemProperly().getValue());
+    }
+
+    public void pressedClientFileList() {
+        tfFileNameServer.setText(filesList.getSelectionModel().selectedItemProperly().getValue());
+    }
+
+    public void sendFile() throws IOException {
+        String path = CLIENT_STORAGE + tfFileNameServer.getText();
+        if (Files.exists(Paths.get(path))) NettyNetwork.getInstance().sendFile(path);
+    }
+
+    private javafx.event.EventHandler<WindowEvent> closeEventHandler = event -> NettyNetwork.getInstance().closeConnection();
+
+    public javafx.event.EventHandler<WindowEvent> getClose() {
+        return closeEventHandler;
     }
 }
