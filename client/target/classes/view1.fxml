@@ -16,10 +16,13 @@
                     <VBox.margin>
                         <Insets left="2.0" right="1.0" />
                     </VBox.margin></TextField>
-                <Button onAction="#pressOnDownloadBtn" text="Скачать">
-                    <VBox.margin>
-                        <Insets left="1.0" />
-                    </VBox.margin></Button>
+                <HBox>
+                    <Button onAction="#pressOnDownloadBtn" text="Скачать">
+                        <VBox.margin>
+                            <Insets left="1.0" />
+                        </VBox.margin>
+                    </Button>
+                </HBox>
             </VBox>
             <ListView fx:id="filesList" onMousePressed="#pressedClientFileList" prefHeight="371.0" prefWidth="248.0" VBox.vgrow="ALWAYS">
                 <VBox.margin>
@@ -47,7 +50,8 @@
                         <Insets left="5.0" />
                         </HBox.margin>
                     </Button>
-                    <Button onAction="#getServerFilesList" text="Обновить" />
+                    <Button onAction="#onClientDelete" text="Удалить"></Button>
+                    <Button onAction="#getServerFilesList" text="Обновить"></Button>
                 </HBox>
             </VBox>
             <ListView fx:id="filesServerList" onMousePressed="#pressedServerFileList" VBox.vgrow="ALWAYS">
