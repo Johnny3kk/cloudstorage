@@ -1,4 +1,5 @@
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,7 +49,6 @@ public class Controller implements Initializable, EventHandler<WindowEvent> {
                     Files.createDirectory(Paths.get(CLIENT_STORAGE));
                     log.info("Create dir " + CLIENT_STORAGE);
                 }
-                //fx stuff
                 filesList.getItems().clear();
                 Files.list(Paths.get(CLIENT_STORAGE)).map(p -> p.getFileName().toString()).forEach(o -> filesList.getItems().add(o));
             } catch (IOException e) {
@@ -57,7 +57,6 @@ public class Controller implements Initializable, EventHandler<WindowEvent> {
         } else {
             Platform.runLater(() -> {
                 try {
-                    //fx stuff
                     filesList.getItems().clear();
                     Files.list(Paths.get(CLIENT_STORAGE)).map(p -> p.getFileName().toString()).forEach(o -> filesList.getItems().add(o));
                 } catch (IOException e) {
@@ -114,5 +113,12 @@ public class Controller implements Initializable, EventHandler<WindowEvent> {
 
     public javafx.event.EventHandler<WindowEvent> getClose() {
         return closeEventHandler;
+    }
+
+    public void onClientDelete(ActionEvent actionEvent) throws IOException {
+        String path = tfFileNameServer.getText();
+        if (path == null) return;
+        Files.delete(Paths.get(CLIENT_STORAGE).resolve(path));
+        refreshLocalFilesList();
     }
 }
